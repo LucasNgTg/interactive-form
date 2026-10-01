@@ -17,58 +17,71 @@
     </p>
   </header>
 
-  <main>
-    <section>
+  <main class="container">
+    <section class="form-section">
       <h2>Formulário</h2>
 
       <form action="">
         <fieldset>
           <legend>Informe seus dados:</legend>
-          <label for="name">Nome</label>
-          <input type="text" id="name">
+          <article class="form-items">
 
+            <label for="name">Nome</label>
+            <input type="text" id="name">
 
-          <label for="email" aria-placeholder="name@example.com">E-mail</label>
-          <input type="email" id="email">
+            <section class="gen-info">
+              <label for="email" aria-placeholder="name@example.com">E-mail</label>
+              <input type="email" id="email">
 
-          <label for="course">Curso</label>
-          <select name="course" id="course">
-            <option value="" disabled selected>Selecione seu curso</option>
-            <option value="eng-comp">Engenharia de Computação</option>
-            <option value="sis-info">Sistemas de Informação</option>
-            <option value="ads">ADS</option>
-          </select>
+              <label for="course">Curso</label>
+              <select name="course" id="course">
+                <option value="" disabled selected>Selecione seu curso</option>
+                <option value="eng-comp">Engenharia de Computação</option>
+                <option value="sis-info">Sistemas de Informação</option>
+                <option value="ads">ADS</option>
+              </select>
+            </section>
 
-          <label for="state">Estado</label>
-          <select name="state" id="state">
-            <option value="" disabled selected>Selecione seu Estado</option>
-            <option value="sao-paulo">São Paulo</option>
-            <option value="rio-de-janeiro">Rio de Janeiro</option>
-          </select>
+            <section class="location">
+              <label for="state">Estado</label>
+              <select name="state" id="state">
+                <option value="" disabled selected>Selecione seu Estado</option>
+                <option value="sao-paulo">São Paulo</option>
+                <option value="rio-de-janeiro">Rio de Janeiro</option>
+              </select>
 
-          <label for="city">Cidade</label>
-          <select name="city" id="city" disabled="disabled">
-            <option value="" disabled selected>Selecione sua cidade</option>
-          </select>
+              <label for="city">Cidade</label>
+              <select name="city" id="city" disabled="disabled">
+                <option value="" disabled selected>Selecione sua cidade</option>
+              </select>
+            </section>
 
-          <label for="pwd">Crie sua senha</label>
-          <input type="password" id="pwd">
-          <small id="pwd-strength">Fraca</small>
-          <p>A senha deve conter:</p>
-          <ul id="pwd-param">
-            <li id="pwd-param__nchar">pelo menos 8 caracteres</li>
-            <li id="pwd-param__upper">pelo menos 1 letra maiúscula</li>
-            <li id="pwd-param__lower">pelo menos 1 letra minúscula</li>
-            <li id="pwd-param__number">pelo menos 1 número</li>
-            <li id="pwd-param__special">pelo menos 1 caractere especial</li>
-          </ul>
+            <section class="pwd">
+              <label for="pwd">Crie sua senha</label>
+              <div class="pwd-input">
+                <input type="password" id="pwd">
+                <small id="pwd-strength">Fraca</small>
+              </div>
 
-          <label for="pwd2">Confirme sua senha</label>
-          <input type="password" id="pwd2">
+              <label for="pwd2">Confirme sua senha</label>
+              <input type="password" id="pwd2">
+            </section>
+
+            <section class="pwd-specific">
+              <p>A senha deve conter:</p>
+              <ul id="pwd-param">
+                <li id="pwd-param__nchar">pelo menos 8 caracteres</li>
+                <li id="pwd-param__upper">pelo menos 1 letra maiúscula</li>
+                <li id="pwd-param__lower">pelo menos 1 letra minúscula</li>
+                <li id="pwd-param__number">pelo menos 1 número</li>
+                <li id="pwd-param__special">pelo menos 1 caractere especial</li>
+              </ul>
+            </section>
+          </article>
 
           <p>Leia atentamente os termos e condições a seguir:</p>
 
-          <article id="terms-text">
+          <article class="terms-text">
             <h2>1. Termos</h2>
             <p>
               Ao acessar ao site <a href="#">Formulário Interativo</a>, concorda
