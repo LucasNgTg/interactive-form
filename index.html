@@ -56,16 +56,9 @@
               </select>
             </section>
 
-            <section class="pwd">
-              <label for="pwd">Crie sua senha</label>
-              <div class="pwd-input">
-                <input type="password" id="pwd">
-                <small id="pwd-strength">Fraca</small>
-              </div>
-
-              <label for="pwd2">Confirme sua senha</label>
-              <input type="password" id="pwd2">
-            </section>
+            <label for="pwd">Crie sua senha</label>
+            <input type="password" id="pwd">
+            <small id="pwd-strength">Fraca</small>
 
             <section class="pwd-specific">
               <p>A senha deve conter:</p>
@@ -74,9 +67,13 @@
                 <li id="pwd-param__upper">pelo menos 1 letra maiúscula</li>
                 <li id="pwd-param__lower">pelo menos 1 letra minúscula</li>
                 <li id="pwd-param__number">pelo menos 1 número</li>
-                <li id="pwd-param__special">pelo menos 1 caractere especial</li>
+                <li id="pwd-param__special">pelo menos 1 caractere especial (!@#$%^&*)</li>
               </ul>
             </section>
+
+            <label for="pwd2" class="pwd-input">Confirme sua senha</label>
+            <input type="password" id="pwd2">
+
           </article>
 
           <p>Leia atentamente os termos e condições a seguir:</p>
@@ -177,9 +174,9 @@
   </main>
 
   <footer>
-      <small>
-        © 2026 Laboratório 05 - JavaScript, DOM e Eventos. Todos os direitos reservados.
-      </small>
+    <small>
+      © 2026 Laboratório 05 - JavaScript, DOM e Eventos. Todos os direitos reservados.
+    </small>
   </footer>
 
 </body>
