@@ -15,7 +15,8 @@
   --clr-subtle: #495057;
 }
 
-html, body {
+html,
+body {
   font-family: sans-serif;
   background-color: var(--clr-bg);
   list-style-position: inside;
@@ -70,10 +71,33 @@ input:not([type="checkbox"]) {
   padding: 8px;
 }
 
+input[type="checkbox"]:not(:disabled):hover + label,
+input[type="checkbox"]:not(:disabled):hover,
+select:not(:disabled),
+button:not(:disabled):hover,
+option:hover {
+  cursor: pointer;
+}
+
+select:not(:disabled):hover {
+  background-color: var(--clr-primary-hover);
+  border-color: var(--clr-primary-border);
+}
+
+select:disabled {
+  background-color: var(--clr-surface);
+}
+
+input:focus,
+select:focus {
+  outline: 3px solid rgba(13, 110, 253, 0.3);
+  border-color: var(--clr-primary);
+}
+
 .info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: repeat(autofit, 1fr);
   gap: 16px;
 }
 
@@ -86,18 +110,10 @@ select {
   flex-grow: 1;
   font-size: 1rem;
   padding-inline: 16px;
+  padding-block: 8px;
   background-color: var(--clr-bg);
   border: 1px solid var(--clr-border);
   border-radius: 6px;
-}
-
-select:not(:disabled):hover {
-  background-color: var(--clr-primary-hover);
-  border-color: var(--clr-primary-border);
-}
-
-select:disabled {
-  background-color: var(--clr-surface);
 }
 
 option:disabled {
@@ -133,7 +149,7 @@ form fieldset > p {
 }
 
 .terms-text {
-  height: min(25vw, 320px);
+  height: min(40vh, 320px);
   overflow-y: auto;
   padding: 16px;
   border: 1px solid var(--clr-border);
@@ -161,6 +177,15 @@ button {
   color: #fff;
   border-radius: 6px;
   font-weight: 700;
+  transition: 0.2s;
+}
+
+button:not(:disabled):hover {
+  filter: brightness(0.9);
+}
+
+button:disabled {
+  opacity: 0.5;
 }
 
 footer {
