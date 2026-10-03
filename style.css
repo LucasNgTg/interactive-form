@@ -17,7 +17,6 @@
   --clr-border: #e3e6ee;
   --clr-surface: #ffffff;
   --clr-subtle: #495057;
-  --clr-warning: #bb1b1b;
 }
 
 html,
@@ -40,6 +39,10 @@ h1 {
 h2 {
   margin-bottom: 8px;
   color: var(--clr-dark);
+}
+
+small {
+  min-height: 1lh;
 }
 
 form {
@@ -75,21 +78,41 @@ input:not([type="checkbox"]) {
   border-radius: 6px;
   font-size: 1rem;
   padding: 8px;
-  
 }
 
-input:not([type="checkbox"]):focus{
-  outline:none;
+input:not([type="checkbox"]):focus {
+  outline: none;
   border-color: var(--clr-dark);
 }
 
-input[aria-invalid="true"]{
+input[aria-invalid="true"] {
   border-color: var(--clr-warning) !important;
+  background-color: var(--clr-warning-bg) !important;
 }
 
-input[aria-invalid="true"]:focus{
-  border-color: var(--clr-warning) !important;
+input[aria-invalid="true"] ~ small {
+  color: var(--clr-warning);
 }
+
+input[aria-invalid="true"]:focus {
+  border-color: var(--clr-warning) !important;
+  outline: 3px solid rgba(220, 53, 69, 0.4) !important;
+}
+
+input[aria-invalid="false"] {
+  border-color: var(--clr-success) !important;
+  background-color: var(--clr-success-bg) !important;
+}
+
+input[aria-invalid="false"]:focus {
+  border-color: var(--clr-success) !important;
+  outline: 3px solid rgba(25, 135, 84, 0.4) !important;
+}
+
+input[aria-invalid="false"] ~ small {
+  color: var(--clr-success);
+}
+
 
 input[type="checkbox"]:not(:disabled):hover + label,
 input[type="checkbox"]:not(:disabled):hover,
@@ -211,32 +234,6 @@ button:disabled {
 
 .hidden {
   opacity: 0;
-}
-
-.warning {
-  color: var(--clr-warning);
-}
-
-.success {
-  color: var(--clr-success);
-}
-
-input.invalid {
-  border-color: var(--clr-warning);
-  background-color: var(--clr-warning-bg);
-}
-
-input.invalid:focus {
-  outline: 3px solid rgba(220, 53, 69, 0.4);
-}
-
-input.valid {
-  border-color: var(--clr-success);
-  background-color: var(--clr-success-bg);
-}
-
-input.valid:focus {
-  outline: 3px solid rgba(25, 135, 84, 0.4);
 }
 
 footer {
