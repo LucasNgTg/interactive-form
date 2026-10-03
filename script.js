@@ -2,7 +2,7 @@
 const nome = document.getElementById("name")
 const ajudaNome = document.getElementById("ajuda-nome")
 const espelho = document.getElementById("espelho")
-const contador = documente.getElementById("contador")
+const contador = document.getElementById("contador")
 const limite = 50
 
 function debounce(fn, delay = 200)
@@ -17,21 +17,19 @@ function debounce(fn, delay = 200)
 
 function atualizarQuantidade(valor)
 {
-    espelho.textContent = 'Você digitou: ${valor}';
     const usados = valor.length;
-    const restantes = limite-usados;
-    contador.textContent = 'Caracteres: ${usados}/${limite}(retam ${retantes})';
-    nome.setAtrribute("aria-invalid", usados>limite? "true" : "false");
-    nome.style.border = usados>limite? "crimson": --color-warning;
+    const restantes = limite - usados;
+    contador.textContent = `Caracteres: ${usados}/${limite} (restam ${restantes})`;
+    nome.setAttribute("aria-invalid", usados>=limite ? "true" : "false");
 }
 
 nome.addEventListener("input", debounce((e)=>
 {
-    if(e.target.value.lenght>limite)
+    if(e.target.value.length>limite)
     {
-        e.target.value = e.target.value.slice(0,limite);
+        e.target.value = e.target.value.slice(0, limite);
     }
     atualizarQuantidade(e.target.value);
-}; 150));
+}, 150));
 
 atualizarQuantidade("");

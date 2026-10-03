@@ -7,6 +7,7 @@
   <title>JavaScript, DOM e Eventos</title>
 
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -27,7 +28,10 @@
           <article class="form-items">
 
             <label for="name">Nome</label>
-            <input type="text" id="name">
+            <input type="text" id="name" aria-describedby="ajuda-nome">
+            <small id="ajuda-nome">Digite seu nome. Máximo 50 caracteres.</small>
+            <small><p id="espelho"></p></small>
+            <small><p id="contador"></p></small>
 
             <section class="info">
               <div>
