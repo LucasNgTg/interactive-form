@@ -11,6 +11,9 @@ const emailVerify = document.getElementById("email-verify");
 const emailRegex =
   /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
+const termsText = document.getElementById("terms-text");
+const termsCheck = document.getElementById("terms-check");
+
 // Validação de nome
 nome.addEventListener(
   "input",
@@ -45,6 +48,21 @@ email.addEventListener("blur", () => {
     validField(email);
   }
 });
+
+// Habilitação do aceite
+termsText.addEventListener("scroll", () => {
+  if (termsText.scrollTop + termsText.clientHeight >= termsText.scrollHeight) {
+    termsCheck.removeAttribute("disabled");
+  }
+})
+
+termsCheck.addEventListener("change", (e) => {
+  if (e.target.checked) {
+    validField(termsCheck);
+  } else {
+    invalidField(termsCheck);
+  }
+})
 
 function debounce(fn, delay = 200) {
   let id;
