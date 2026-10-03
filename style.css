@@ -9,6 +9,8 @@
   --clr-primary-hover: #e9f4ff;
   --clr-primary-border: #cfe2ff;
   --clr-dark: #052c65;
+  --clr-warning: #dc3545;
+  --clr-warning-bg: #fff1f3;
   --clr-bg: #f8f9fa;
   --clr-border: #e3e6ee;
   --clr-surface: #ffffff;
@@ -59,6 +61,7 @@ legend {
 
 .form-items label {
   display: block;
+  width: fit-content;
   margin-top: 16px;
   margin-bottom: 4px;
 }
@@ -98,7 +101,7 @@ select:focus {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: repeat(autofit, 1fr);
-  gap: 16px;
+  gap: 8px;
 }
 
 .info div {
@@ -186,6 +189,23 @@ button:not(:disabled):hover {
 
 button:disabled {
   opacity: 0.5;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.warning {
+  color: var(--clr-warning);
+}
+
+input.invalid {
+  border-color: var(--clr-warning);
+  background-color: var(--clr-warning-bg);
+}
+
+input.invalid:focus {
+  outline: 3px solid rgba(220, 53, 69, 0.4);
 }
 
 footer {
