@@ -17,6 +17,7 @@
   --clr-border: #e3e6ee;
   --clr-surface: #ffffff;
   --clr-subtle: #495057;
+  --clr-warning: #bb1b1b;
 }
 
 html,
@@ -74,6 +75,20 @@ input:not([type="checkbox"]) {
   border-radius: 6px;
   font-size: 1rem;
   padding: 8px;
+  
+}
+
+input:not([type="checkbox"]):focus{
+  outline:none;
+  border-color: var(--clr-dark);
+}
+
+input[aria-invalid="true"]{
+  border-color: var(--clr-warning) !important;
+}
+
+input[aria-invalid="true"]:focus{
+  border-color: var(--clr-warning) !important;
 }
 
 input[type="checkbox"]:not(:disabled):hover + label,
