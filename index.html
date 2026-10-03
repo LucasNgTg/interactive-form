@@ -42,27 +42,31 @@
                   <option value="" disabled selected>-- Selecione seu curso --</option>
                   <option value="eng-comp">Engenharia de Computação</option>
                   <option value="sis-info">Sistemas de Informação</option>
-                  <option value="ads">ADS</option>
+                  <option value="gastro">Gastronomia</option>
+                  <option value="adm">Administração</option>
+                  <option value="enfermagem">Enfermagem</option>
                 </select>
-                <small id="course-verify" class="warning hidden">Selecione um curso</small>
+                <small id="course-verify" class="warning hidden"></small>
               </div>
 
               <div>
                 <label for="state">Estado</label>
-                <select name="state" id="state">
+                <select name="state" id="state" required>
                   <option value="" disabled selected>-- Selecione seu Estado --</option>
                   <option value="sao-paulo">São Paulo</option>
                   <option value="rio-de-janeiro">Rio de Janeiro</option>
+                  <option value="minas-gerais">Minas Gerais</option>
+                  <option value="espirito-santo">Espírito Santo</option>
                 </select>
-                <small id="state-verify" class="warning hidden">Selecione um Estado</small>
+                <small id="state-verify" class="warning hidden"></small>
               </div>
 
               <div>
                 <label for="city">Cidade</label>
-                <select name="city" id="city" disabled="disabled">
-                  <option value="" disabled selected>-- Selecione sua cidade --</option>
+                <select name="city" id="city" required disabled>
+                  <option value="" disabled selected>-- Selecione primeiro um estado --</option>
                 </select>
-                <small id="city-verify" class="warning hidden">Selecione uma cidade</small>
+                <small id="city-verify" class="warning hidden"></small>
               </div>
             </section>
 
