@@ -11,6 +11,7 @@
   --clr-dark: #052c65;
   --clr-warning: #dc3545;
   --clr-warning-bg: #fff1f3;
+  --clr-warning-bg-dark: #f8d7da;
   --clr-success: #198754;
   --clr-success-bg: #eafff5;
   --clr-bg: #f8f9fa;
@@ -90,7 +91,12 @@ input[aria-invalid="true"] {
   background-color: var(--clr-warning-bg) !important;
 }
 
-input[aria-invalid="true"] ~ small {
+select[aria-invalid="true"] {
+  border-color: var(--clr-warning) !important;
+  background-color: var(--clr-warning-bg-dark) !important;
+}
+
+[aria-invalid="true"] ~ small {
   color: var(--clr-warning);
 }
 
@@ -109,10 +115,9 @@ input[aria-invalid="false"]:focus {
   outline: 3px solid rgba(25, 135, 84, 0.4) !important;
 }
 
-input[aria-invalid="false"] ~ small {
+[aria-invalid="false"] ~ small {
   color: var(--clr-success);
 }
-
 
 input[type="checkbox"]:not(:disabled):hover + label,
 input[type="checkbox"]:not(:disabled):hover,
@@ -136,6 +141,10 @@ select:focus {
   outline: 3px solid rgba(13, 110, 253, 0.3);
   border-color: var(--clr-primary);
   background-color: var(--clr-primary-bg);
+}
+
+input[type="checkbox"]:disabled + label {
+  opacity: 0.5;
 }
 
 .info {
