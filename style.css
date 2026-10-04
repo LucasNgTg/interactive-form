@@ -172,6 +172,24 @@ option:disabled {
   grid-area: field;
 }
 
+#pwd-strength.fraca{color: var(--clr-warning);}
+#pwd-strength.media{color: var(--clr-warning);}
+#pwd-strength.forte{color: var(--clr-success);}
+#pwd-confirm-verify:not(.hidden) {
+  color: var(--clr-warning);
+}
+
+input[id="pwd2"][aria-invalid="false"] ~ #pwd-confirm-verify {
+  color: var(--clr-success);
+}
+
+input[id="pwd2"][aria-invalid="true"] ~ #pwd-confirm-verify {
+  color: var(--clr-warning);
+}
+
+li.valido{color: var(--clr-success); font-weight: 600;}
+li.invalido{color: var(--clr-warning);}
+
 .pwd-specific {
   margin-top: 12px;
   background-color: var(--clr-bg);
