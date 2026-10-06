@@ -1,4 +1,5 @@
 const nome = document.getElementById("name");
+const ajudaNome1 = document.getElementById("ajuda-nome-1");
 const ajudaNome = document.getElementById("ajuda-nome");
 const espelho = document.getElementById("espelho");
 const contador = document.getElementById("contador");
@@ -19,6 +20,7 @@ const termsText = document.getElementById("terms-text");
 const termsCheck = document.getElementById("terms-check");
 
 const limite = 50;
+const minimo = 3;
 
 const emailRegex =
   /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
@@ -52,7 +54,8 @@ nome.addEventListener("input",
   }, 150),
 );
 
-ajudaNome.textContent = `${limite}`;
+ajudaNome.textContent = `${minimo}`;
+ajudaNome1.textContent = `${limite}`;
 contador.textContent = `0/${limite}`;
 numRestantes.textContent = `${limite}`;
 
@@ -196,7 +199,7 @@ function atualizarQuantidade(valor) {
   const restantes = limite - usados;
   contador.textContent = `${usados}/${limite}`;
   numRestantes.textContent = `${restantes}`;
-  nome.setAttribute("aria-invalid", usados >= limite || usados === 0 ? "true" : "false");
+  nome.setAttribute("aria-invalid", usados >= limite || usados <3 ? "true" : "false");
 }
 
 
