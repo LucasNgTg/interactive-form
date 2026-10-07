@@ -9,6 +9,7 @@ const email = document.getElementById("email");
 const emailVerify = document.getElementById("email-verify");
 
 const courseVerify = document.getElementById("course-verify");
+const course = document.getElementById("course");
 
 const estado = document.getElementById("state");
 const cidade = document.getElementById("city");
@@ -36,6 +37,8 @@ const submitBtn = document.getElementById("submit-btn");
 const limite = 50;
 const minimo = 3;
 
+const msgSucesso = document.getElementById("msg-sucesso");
+
 const emailRegex =
   /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
@@ -45,6 +48,16 @@ const cidades = {
   "minas-gerais": ["Belo Horizonte", "Uberlândia", "Ouro Preto"],
   "espirito-santo": ["Vitória", "Vila Velha", "Guarapari"],
 };
+
+//Esconde a mensagem de sucesso de envio ao modificar algum campo
+nome.addEventListener("input", () => hideMsg(msgSucesso));
+email.addEventListener("input", () => hideMsg(msgSucesso));
+course.addEventListener("change", () => hideMsg(msgSucesso));
+estado.addEventListener("change", () => hideMsg(msgSucesso));
+cidade.addEventListener("change", () => hideMsg(msgSucesso));
+pwd.addEventListener("input", () => hideMsg(msgSucesso));
+pwd2.addEventListener("input", () => hideMsg(msgSucesso));
+termsCheck.addEventListener("change", () => hideMsg(msgSucesso));
 
 // Validação de nome
 nome.addEventListener(
@@ -173,7 +186,8 @@ pwd.addEventListener("input", (e) => {
 
 // Habilitação do aceite
 termsText.addEventListener("scroll", () => {
-  if (termsText.scrollTop + termsText.clientHeight >= termsText.scrollHeight) {
+  const tolerancia = 4;
+  if (termsText.scrollTop + termsText.clientHeight >= termsText.scrollHeight-tolerancia) {
     termsCheck.removeAttribute("disabled");
   }
 });
@@ -187,7 +201,7 @@ termsCheck.addEventListener("change", (e) => {
   revalidar();
 });
 
-submitBtn.addEventListener("click", () => {
+submitBtn.addEventListener("click", (e) => {
   preventDefault();
   limpar();
 })
@@ -207,7 +221,6 @@ function showMsg(verify) {
 }
 
 function hideMsg(verify) {
-  verify.textContent = "";
   verify.classList.add("hidden");
   verify.setAttribute("aria-hidden", "true");
 }
@@ -332,6 +345,27 @@ function limpar() {
   pwd.value = "";
   pwd2.value = "";
   termsCheck.checked = false;
+  
+  cidade.disabled = true;
+  contador.textContent = `0/${limite}`;
+  numRestantes.textContent = `${limite}`;
+  pwdStrength.classList.add("hidden");
+
+  const inputs = [nome, email, course, estado, cidade, pwd, pwd2, termsCheck];
+  inputs.forEach(input => {
+    input.removeAttribute("aria-invalid");
+  });
+
+  hideMsg(emailVerify);
+  hideMsg(courseVerify);
+  hideMsg(stateVerify);
+  hideMsg(cityVerify);
+  hideMsg(pwdConfirmVerify);
+
+  contador.textContent = `0/${limite}`;
+  numRestantes.textContent = `${limite}`;
+  pwdStrength.classList.add("hidden");
+  pwdStrength.textContent = "";
 }
 
 function revalidar() {
@@ -348,5 +382,15 @@ function revalidar() {
 
   if (okTudo) {
     submitBtn.disabled = false;
+  } else{
+    submitBtn.disbled = true;
   }
 }
+
+submitBtn.addEventListener("click", (e) =>{
+  e.preventDefault();
+
+  
+  limpar();
+  showMsg(msgSucesso);
+});
