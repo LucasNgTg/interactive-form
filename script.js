@@ -30,7 +30,7 @@ const cidades = {
   "espirito-santo": ["Vitória", "Vila Velha", "Guarapari"],
 };
 const pwd = document.getElementById("pwd");
-const pwdStregth = document.getElementById("pwd-strength");
+const pwdStrength = document.getElementById("pwd-strength");
 
 const reqNchar = document.getElementById("pwd-param__nchar");
 const reqUpper = document.getElementById("pwd-param__upper");
@@ -41,9 +41,9 @@ const reqSpecial = document.getElementById("pwd-param__special");
 const pwd2 = document.getElementById("pwd2");
 const pwdConfirmVerify = document.getElementById("pwd-confirm-verify");
 
-
 // Validação de nome
-nome.addEventListener("input",
+nome.addEventListener(
+  "input",
   debounce((e) => {
     if (e.target.value.length > limite) {
       e.target.value = e.target.value.slice(0, limite);
@@ -148,6 +148,16 @@ estado.addEventListener("change", () => {
   }
 });
 
+// Validação da senha
+pwd.addEventListener("input", (e) => {
+  const notAllowedChars = /[^A-Za-z0-9!@#$%^&*]/;
+
+  e.target.value = e.target.value.replace(notAllowedChars, "");
+
+  atualizarForcaSenha(e);
+  console.log(pwdReq(e.target.value));
+});
+
 // Habilitação do aceite
 termsText.addEventListener("scroll", () => {
   if (termsText.scrollTop + termsText.clientHeight >= termsText.scrollHeight) {
@@ -199,62 +209,75 @@ function atualizarQuantidade(valor) {
   nome.setAttribute("aria-invalid", usados >= limite || usados === 0 ? "true" : "false");
 }
 
-
-function scoreSenha(v)
-{
-  let p=0;
-  if(v.length>=8) p+=30;
-  if(/[A-Z]/.test(v)) p+=20;
-  if(/[a-z]/.test(v)) p+=20;
-  if(/[^A-Za-z0-9]/.test(v)) p+=15;
-  if(/\d/.test(v)) p+=15;
-  return Math.min(p,100);
+function testReq(v) {
+  const requirements = [
+    v.length >= 8,       // tamanho da senha
+    /[A-Z]/.test(v),     // letras maiúsculas
+    /[a-z]/.test(v),     // letras minúsculas
+    /\d/.test(v),        // números
+    /[!@#$%^&*]/.test(v) // caracteres especiais
+  ];
+  
+  return requirements;
 }
 
+function pwdReq(v) {
+  const reqs = testReq(v)
 
-function atualizarForçaSenha(e)
-{
+  const trueCount = reqs.filter(Boolean).length;
+  return trueCount;
+}
+
+// function scoreSenha(v) {
+//   let p = 0;
+//   if (v.length >= 8) p += 30; // tamanho da senha
+//   if (/[A-Z]/.test(v)) p += 20; // letras maiúsculas
+//   if (/[a-z]/.test(v)) p += 20; // letras minúsculas
+//   if (/[!@#$%^&*]/.test(v)) p += 15; // letras maiúsculas, letras minúsculas e números
+//   if (/\d/.test(v)) p += 15; //
+//   return Math.min(p, 100);
+// }
+
+function atualizarForcaSenha(e) {
   const valor = e.target.value;
-  if(valor.length===0)
-  {
-    pwdStregth.classList.add("hidden");
-    return;
-  }
-  pwdStregth.classList.remove("hidden");
+  if (valor.length === 0) {
+    pwdStrength.classList.add("hidden");
+  } else {
+    pwdStrength.classList.remove("hidden");
 
-  const pts = scoreSenha(valor);
+    // const pts = scoreSenha(valor);
+    const pts = pwdReq(valor);
 
-  pwdStregth.classList.remove("fraca","media","forte");
+    pwdStrength.classList.remove("fraca", "media", "forte");
 
-  if(pts<40)
-  {
-    pwdStregth.textContent = "Fraca";
-    pwdStregth.classList.add("fraca");
-    invalidField(pwd);
-  }
-  else if (pts<80)
-  {
-    pwdStregth.textContent = "Média";
-    pwdStregth.classList.add("media");
-    invalidField(pwd);
-  }
-  else 
-  {
-    pwdStregth.textContent = "Forte";
-    pwdStregth.classList.add("forte");
-    validField(pwd);
+    // if (pts < 40) {
+    if (pts < 3) {
+      pwdStrength.textContent = "Fraca";
+      pwdStrength.classList.add("fraca");
+      invalidField(pwd);
+    // } else if (pts < 80) {
+    } else if (pts < 5) {
+      pwdStrength.textContent = "Média";
+      pwdStrength.classList.add("media");
+      invalidField(pwd);
+    } else {
+      pwdStrength.textContent = "Forte";
+      pwdStrength.classList.add("forte");
+      validField(pwd);
+    }
   }
 
   atualizarRequisitos(valor);
-
 }
 
-function atualizarRequisitos(v){
-  toggleRequisito(reqNchar, v.length>=8);
-  toggleRequisito(reqUpper, /[A-Z]/.test(v));
-  toggleRequisito(reqLower, /[a-z]/.test(v));
-  toggleRequisito(reqNumber, /\d/.test(v));
-  toggleRequisito(reqSpecial, /[^A-Za-z0-9]/.test(v));
+function atualizarRequisitos(v) {
+  const reqs = testReq(v);
+
+  toggleRequisito(reqNchar, reqs[0]);
+  toggleRequisito(reqUpper, reqs[1]);
+  toggleRequisito(reqLower, reqs[2]);
+  toggleRequisito(reqNumber, reqs[3]);
+  toggleRequisito(reqSpecial, reqs[4]);
 }
 
 function toggleRequisito(elemento, condicao) {
@@ -267,18 +290,15 @@ function toggleRequisito(elemento, condicao) {
   }
 }
 
-pwd.addEventListener("input", atualizarForçaSenha);
-
-function validarConfirmaçãoSenha()
-{
+function validarConfirmacaoSenha() {
   if (pwd2.value.length === 0) {
     hideMsg(pwdConfirmVerify);
     pwd2.removeAttribute("aria-invalid");
     return;
   }
-showMsg(pwdConfirmVerify);
+  showMsg(pwdConfirmVerify);
 
-if (pwd2.value === pwd.value) {
+  if (pwd2.value === pwd.value) {
     pwdConfirmVerify.textContent = "As senhas coincidem";
     validField(pwd2);
   } else {
@@ -287,10 +307,10 @@ if (pwd2.value === pwd.value) {
   }
 }
 
-pwd2.addEventListener("input", validarConfirmaçãoSenha);
+pwd2.addEventListener("input", validarConfirmacaoSenha);
 
 pwd.addEventListener("input", () => {
   if (pwd2.value.length > 0) {
-    validarConfirmaçãoSenha();
+    validarConfirmacaoSenha();
   }
 });
