@@ -19,18 +19,6 @@ const cityVerify = document.getElementById("city-verify");
 const termsText = document.getElementById("terms-text");
 const termsCheck = document.getElementById("terms-check");
 
-const limite = 50;
-const minimo = 3;
-
-const emailRegex =
-  /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-
-const cidades = {
-  "sao-paulo": ["São Paulo", "Campinas", "Santos"],
-  "rio-de-janeiro": ["Rio de Janeiro", "Niterói", "Petrópolis"],
-  "minas-gerais": ["Belo Horizonte", "Uberlândia", "Ouro Preto"],
-  "espirito-santo": ["Vitória", "Vila Velha", "Guarapari"],
-};
 const pwd = document.getElementById("pwd");
 const pwdStrength = document.getElementById("pwd-strength");
 
@@ -43,6 +31,21 @@ const reqSpecial = document.getElementById("pwd-param__special");
 const pwd2 = document.getElementById("pwd2");
 const pwdConfirmVerify = document.getElementById("pwd-confirm-verify");
 
+const submitBtn = document.getElementById("submit-btn");
+
+const limite = 50;
+const minimo = 3;
+
+const emailRegex =
+  /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+const cidades = {
+  "sao-paulo": ["São Paulo", "Campinas", "Santos"],
+  "rio-de-janeiro": ["Rio de Janeiro", "Niterói", "Petrópolis"],
+  "minas-gerais": ["Belo Horizonte", "Uberlândia", "Ouro Preto"],
+  "espirito-santo": ["Vitória", "Vila Velha", "Guarapari"],
+};
+
 // Validação de nome
 nome.addEventListener(
   "input",
@@ -51,6 +54,7 @@ nome.addEventListener(
       e.target.value = e.target.value.slice(0, limite);
     }
     atualizarQuantidade(e.target.value);
+    revalidar();
   }, 150),
 );
 
@@ -77,6 +81,8 @@ email.addEventListener("blur", () => {
     emailVerify.textContent = successMsg;
     validField(email);
   }
+
+  revalidar();
 });
 
 // Validação do curso
@@ -95,6 +101,7 @@ course.addEventListener("blur", () => {
     hideMsg(courseVerify);
     validField(course);
   }
+  revalidar();
 });
 
 // Validação do Estado
@@ -113,6 +120,7 @@ estado.addEventListener("blur", () => {
     hideMsg(stateVerify);
     validField(estado);
   }
+  revalidar();
 });
 
 // Validação da cidade
@@ -131,6 +139,7 @@ cidade.addEventListener("blur", () => {
     hideMsg(cityVerify);
     validField(cidade);
   }
+  revalidar();
 });
 
 estado.addEventListener("change", () => {
@@ -149,6 +158,7 @@ estado.addEventListener("change", () => {
   } else {
     cidade.disabled = true;
   }
+  revalidar();
 });
 
 // Validação da senha
@@ -158,7 +168,7 @@ pwd.addEventListener("input", (e) => {
   e.target.value = e.target.value.replace(notAllowedChars, "");
 
   atualizarForcaSenha(e);
-  console.log(pwdReq(e.target.value));
+  revalidar();
 });
 
 // Habilitação do aceite
@@ -174,7 +184,13 @@ termsCheck.addEventListener("change", (e) => {
   } else {
     invalidField(termsCheck);
   }
+  revalidar();
 });
+
+submitBtn.addEventListener("click", () => {
+  preventDefault();
+  limpar();
+})
 
 // Funções auxiliares
 function debounce(fn, delay = 200) {
@@ -209,37 +225,27 @@ function atualizarQuantidade(valor) {
   const restantes = limite - usados;
   contador.textContent = `${usados}/${limite}`;
   numRestantes.textContent = `${restantes}`;
-  nome.setAttribute("aria-invalid", usados >= limite || usados <3 ? "true" : "false");
+  nome.setAttribute("aria-invalid", usados >= limite || usados < 3 ? "true" : "false");
 }
 
 function testReq(v) {
   const requirements = [
-    v.length >= 8,       // tamanho da senha
-    /[A-Z]/.test(v),     // letras maiúsculas
-    /[a-z]/.test(v),     // letras minúsculas
-    /\d/.test(v),        // números
-    /[!@#$%^&*]/.test(v) // caracteres especiais
+    v.length >= 8, // tamanho da senha
+    /[A-Z]/.test(v), // letras maiúsculas
+    /[a-z]/.test(v), // letras minúsculas
+    /\d/.test(v), // números
+    /[!@#$%^&*]/.test(v), // caracteres especiais
   ];
-  
+
   return requirements;
 }
 
 function pwdReq(v) {
-  const reqs = testReq(v)
+  const reqs = testReq(v);
 
   const trueCount = reqs.filter(Boolean).length;
   return trueCount;
 }
-
-// function scoreSenha(v) {
-//   let p = 0;
-//   if (v.length >= 8) p += 30; // tamanho da senha
-//   if (/[A-Z]/.test(v)) p += 20; // letras maiúsculas
-//   if (/[a-z]/.test(v)) p += 20; // letras minúsculas
-//   if (/[!@#$%^&*]/.test(v)) p += 15; // letras maiúsculas, letras minúsculas e números
-//   if (/\d/.test(v)) p += 15; //
-//   return Math.min(p, 100);
-// }
 
 function atualizarForcaSenha(e) {
   const valor = e.target.value;
@@ -248,17 +254,14 @@ function atualizarForcaSenha(e) {
   } else {
     pwdStrength.classList.remove("hidden");
 
-    // const pts = scoreSenha(valor);
     const pts = pwdReq(valor);
 
     pwdStrength.classList.remove("fraca", "media", "forte");
 
-    // if (pts < 40) {
     if (pts < 3) {
       pwdStrength.textContent = "Fraca";
       pwdStrength.classList.add("fraca");
       invalidField(pwd);
-    // } else if (pts < 80) {
     } else if (pts < 5) {
       pwdStrength.textContent = "Média";
       pwdStrength.classList.add("media");
@@ -297,7 +300,7 @@ function validarConfirmacaoSenha() {
   if (pwd2.value.length === 0) {
     hideMsg(pwdConfirmVerify);
     pwd2.removeAttribute("aria-invalid");
-    return;
+    return false;
   }
   showMsg(pwdConfirmVerify);
 
@@ -308,6 +311,8 @@ function validarConfirmacaoSenha() {
     pwdConfirmVerify.textContent = "As senhas devem ser idênticas";
     invalidField(pwd2);
   }
+
+  return true;
 }
 
 pwd2.addEventListener("input", validarConfirmacaoSenha);
@@ -317,3 +322,31 @@ pwd.addEventListener("input", () => {
     validarConfirmacaoSenha();
   }
 });
+
+function limpar() {
+  nome.value = "";
+  email.value = "";
+  course.value = "";
+  estado.value = "";
+  cidade.value = "";
+  pwd.value = "";
+  pwd2.value = "";
+  termsCheck.checked = false;
+}
+
+function revalidar() {
+  const okNome = nome.value.length >= 3 && nome.value.length <= 50;
+  const okEmail = emailRegex.test(email.value);
+  const okCurso = course.value;
+  const okEstado = estado.value;
+  const okCidade = cidade.value;
+  const okSenha = pwdReq(pwd.value) === 5;
+  const okconfirmSenha = validarConfirmacaoSenha();
+  const okTerms = termsCheck.checked;
+
+  const okTudo = okNome && okEmail && okCurso && okEstado && okCidade && okSenha && okconfirmSenha && okTerms;
+
+  if (okTudo) {
+    submitBtn.disabled = false;
+  }
+}
